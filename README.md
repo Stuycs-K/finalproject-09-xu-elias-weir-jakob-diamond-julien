@@ -3,7 +3,7 @@
  
 ### GROUP NAME HERE (CHANGE THIS!!!!!)
 
-Group Members Here (CHANGE THIS!!!!!)
+Elias Xu, Jakob Weir, Julien Diamond
        
 ### Project Description:
 
