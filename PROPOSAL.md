@@ -2,17 +2,20 @@
 
 ## Group Members:
 
-names here.(CHANGE THIS!!!!!)
-       
+Julien Diamond, Jakob Weir, Elias Xu
+
 # Intentions:
 
-A statement of the problem you are solving and/or a high level description of the project. (CHANGE THIS!!!!!)
-    
+Our project deals with analyzing the arbitrary code execution bug using overflowing buffers.
+
 # Intended usage:
 
-A description as to how the project will be used (describe the user interface). (CHANGE THIS!!!!!)
+As of now, we're planning to have a video and a report about this, and a program that can exploit software of something like this. 
   
 # Technical Details:
+
+
+
 
 (CHANGE THIS!!!!!)
 
@@ -25,4 +28,13 @@ How you are breaking down the project and who is responsible for which parts.
     
 # Intended pacing:
 
-A timeline with expected completion dates of parts of the project. (CHANGE THIS!!!!!)
+1. Learn more about what this is. (This weekend)
+    - Learn more about famous / interesting hacks using this method
+    - Current issues and mitigations
+2. Create a demo (Beginnings of next week to end of next week)
+    - Create an arbitrary code execution software that can run commands
+3. Make a presentation (Week after that)
+    - Why does this happen?
+    - How does one mitigate this?
+    - How can you detect these issues and exploit them?
+
