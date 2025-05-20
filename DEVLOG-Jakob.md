@@ -7,5 +7,5 @@ This document must be updated daily every time you finish a work session.
 ### 2025-05-16 - TryHackMe
 Spent class time doing TryHackMe on buffer overflow.
 
-### 2024-01-03 - Brief description
-
+### 2025-05-19 - THM Continued
+Tried to continue TryHackMe, but had trouble figuring out how to run the C code properly.
