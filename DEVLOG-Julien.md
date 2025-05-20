@@ -14,3 +14,7 @@ Created general note-taking doc to compile information, and started filling it o
 ### 2025-05-20 - More notes on buffer overflow
 
 Continued taking notes into note doc
+
+### 2025-05-20 (class) - Notes on exploitation + Morris Worm
+
+Took notes on methods of stack-based and heap-based buffer overflow, as well as overview of impact of Morris Worm (historical example)
