@@ -18,3 +18,7 @@ Continued taking notes into note doc
 ### 2025-05-20 (class) - Notes on exploitation + Morris Worm
 
 Took notes on methods of stack-based and heap-based buffer overflow, as well as overview of impact of Morris Worm (historical example)
+
+### 2025-05-20 - Stack-based exploitation
+
+Continuted looking in to how stack-based exploitation is performed by overwriting return address in the call stack
