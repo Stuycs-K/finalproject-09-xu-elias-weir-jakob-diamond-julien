@@ -14,3 +14,6 @@ Tried to continue TryHackMe, but had trouble figuring out how to run the C code 
 Caught up absent group member, successfully ran C code, looked at ways to complete next part, including seeing memory addresses.
 
 ### 2025-05-21 - AP macroeconomics exam
+
+### 2025-05-22 - Further THM research
+Got an understanding of how to find and manipulate stacks. Learned some from https://medium.com/@cyberlarry/walkthrough-tryhackme-buffer-overflows-task-7-overwriting-function-pointers-ac1336979261.
