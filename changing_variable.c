@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
+// source : https://stackoverflow.com/questions/26245447/which-versions-of-gcc-or-flags-should-i-use-when-studying-buffer-overflows
 // $ gcc change_of_variable.c -o cccchanges -zexecstack -fno-stack-protector
 // $ ./cccchanges
 // msksmadsmfnadsf
