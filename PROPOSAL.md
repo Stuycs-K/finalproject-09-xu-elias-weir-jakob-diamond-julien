@@ -14,17 +14,11 @@ As of now, we're planning to have a video and a report about this, and a program
   
 # Technical Details:
 
+1. We going to have multiple demos that can all run on marge. 
+    - The first one will initiate a basic stack overflow
+    - The second one will cause a variable change through buffer overflow and also bypass traditional buffer overflow protections.
 
 
-
-(CHANGE THIS!!!!!)
-
-A description of your technical design. This should include: 
-   
-How you will be using the topics covered in class in the project.
-     
-How you are breaking down the project and who is responsible for which parts.
-  
     
 # Intended pacing:
 
