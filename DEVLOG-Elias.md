@@ -18,9 +18,14 @@ AP Latin Test
 
 ### 2025-05-20
 
-- Create working 
+- Create working demo
 
 
 ### 2025-05-21 Absent
 
 AP Macro Exam
+
+### 2025-05-22
+
+- Found interesting link: [here](https://www.fortinet.com/resources/cyberglossary/buffer-overflow)
+- Found flags to manipulate the allow the running of buffer overflow stuff marge (however the randomized memory addresses cannot be stopped)
