@@ -29,3 +29,7 @@ AP Macro Exam
 
 - Found interesting link: [here](https://www.fortinet.com/resources/cyberglossary/buffer-overflow)
 - Found flags to manipulate the allow the running of buffer overflow stuff marge (however the randomized memory addresses cannot be stopped)
+
+### 2025-05-23
+
+- Make the function pointer stuff work in the stuy computers
