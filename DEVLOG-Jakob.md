@@ -17,3 +17,6 @@ Caught up absent group member, successfully ran C code, looked at ways to comple
 
 ### 2025-05-22 - Further THM research
 Got an understanding of how to find and manipulate stacks. Learned some from https://medium.com/@cyberlarry/walkthrough-tryhackme-buffer-overflows-task-7-overwriting-function-pointers-ac1336979261.
+
+### 2025-05-23 - Running on lab computers
+Ran some of the TryHackMe code on lab computers to test buffer overflow there after much trial and error.
