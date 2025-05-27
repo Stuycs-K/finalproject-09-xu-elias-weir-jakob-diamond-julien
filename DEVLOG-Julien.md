@@ -22,3 +22,7 @@ Took notes on methods of stack-based and heap-based buffer overflow, as well as 
 ### 2025-05-20 - Stack-based exploitation
 
 Continuted looking in to how stack-based exploitation is performed by overwriting return address in the call stack
+
+### 2025-05-26 - Specific Example
+
+Was able to trace through specific stack-based buffer overflow example with gdb to view memory addresses in the stack. I was unable to replicate it on my own computer, likely due to modern security mechanisms.
