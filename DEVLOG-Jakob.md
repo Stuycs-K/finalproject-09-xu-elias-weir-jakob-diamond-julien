@@ -20,3 +20,10 @@ Got an understanding of how to find and manipulate stacks. Learned some from htt
 
 ### 2025-05-23 - Running on lab computers
 Ran some of the TryHackMe code on lab computers to test buffer overflow there after much trial and error.
+
+### 2025-05-27 - Strange character
+Tried to figure out why there was 8c instead of cc. Eventually fixed by using a payload instead of Python output.
+From the walkthrough:
+Because of the order in which Unix-based systems allocate memory, we need to unset some environment variables in order to use the same memory addresses inside and outside gdb. We need to unset env LINES and unset env COLUMNS within gdb with this command:
+
+`set exec-wrapper env -u LINES -u COLUMNS`
