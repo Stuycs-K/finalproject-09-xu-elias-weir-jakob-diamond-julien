@@ -36,3 +36,5 @@ AP Macro Exam
 
 
 ### 2025-05-27
+
+- Work out some ascii difficulties
