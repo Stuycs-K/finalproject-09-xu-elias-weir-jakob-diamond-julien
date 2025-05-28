@@ -27,10 +27,14 @@ Continuted looking in to how stack-based exploitation is performed by overwritin
 
 Was able to trace through specific stack-based buffer overflow example with gdb to view memory addresses in the stack. I was unable to replicate it on my own computer, likely due to modern security mechanisms.
 
-### 2025-05-28 (class) - Attempted implementation of example
+### 2025-05-27 (class) - Attempted implementation of example
 
 Attempted to send address of special function as payload to overwrite return address for other function, but was met with segfaults
 
-### 2025-05-28 - Continued attempted implementation of example
+### 2025-05-27 - Continued attempted implementation of example
 
 Through further gdb tracking, the program seems to successfully "find" the special function, but it segfaults upon receiving SIGSEGV. I will try to use signal handling for this tomorrow
+
+### 2025-05-28 (class) - Continued attempted implementation of example
+
+tried to use xxd to write memory into input file
