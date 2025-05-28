@@ -27,3 +27,6 @@ From the walkthrough:
 Because of the order in which Unix-based systems allocate memory, we need to unset some environment variables in order to use the same memory addresses inside and outside gdb. We need to unset env LINES and unset env COLUMNS within gdb with this command:
 
 `set exec-wrapper env -u LINES -u COLUMNS`
+
+### 2025-05-28 - Using buffer overflow for root access
+Continued to next THM section. [THM](https://tryhackme.com/room/bof1). [Walkthrough](https://l1ge.github.io/tryhackme_bof1/).
