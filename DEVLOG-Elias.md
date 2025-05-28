@@ -38,3 +38,7 @@ AP Macro Exam
 ### 2025-05-27
 
 - Work out some ascii difficulties
+
+### 2025-05-28
+
+- Found critical CVE that can be used to demonstrate stack overflows
