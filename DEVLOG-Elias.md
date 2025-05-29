@@ -42,3 +42,7 @@ AP Macro Exam
 ### 2025-05-28
 
 - Found critical CVE that can be used to demonstrate stack overflows
+
+### 2025-05-29
+
+- Found way to exploit CVE bug using dockerfile
