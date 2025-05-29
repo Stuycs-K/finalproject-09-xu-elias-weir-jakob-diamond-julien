@@ -1,4 +1,6 @@
 # SETUP INSTRUCTIONS
+# docker build -t sudo-test .; docker run -it --rm --tty sudo-test
+# also run perl -e 'print(("A"x100 . "\x00") x 50)' | sudo -S id
 # docker build -t sudo-test .
 # docker run -it --rm sudo-test
 
