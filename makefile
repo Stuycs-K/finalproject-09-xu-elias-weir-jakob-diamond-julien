@@ -5,7 +5,7 @@ variable_change: cccchanges
 	@./cccchanges
 
 cccchanges: 
-	@gcc change_of_variable.c -o cccchanges -zexecstack -fno-stack-protector
+	@gcc changing_variable.c -o cccchanges -zexecstack -fno-stack-protector
 
 # example args -> sigmasigma
 working_demo: working
