@@ -21,3 +21,5 @@ list here(CHANGE THIS!!!!!)
 
 https://en.wikipedia.org/wiki/NOP_slide 
 https://nvd.nist.gov/vuln/detail/cve-2019-18634 
+https://y3a.github.io/2021/03/03/sudo-cve-analysis/
+

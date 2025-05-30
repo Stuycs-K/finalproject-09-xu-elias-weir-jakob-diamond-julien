@@ -4,6 +4,8 @@
 # docker build -t sudo-test .
 # docker run -it --rm sudo-test
 
+# blog post
+
 # alpine releases https://www.alpinelinux.org/releases/
 FROM alpine:3.8.4
 
