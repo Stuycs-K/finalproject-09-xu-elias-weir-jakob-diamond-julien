@@ -38,3 +38,7 @@ Through further gdb tracking, the program seems to successfully "find" the speci
 ### 2025-05-28 (class) - Continued attempted implementation of example
 
 tried to use xxd to write memory into input file
+
+### 2025-05-31 - demo2 has been conquered
+
+Got it to work in gdb by swapping printf for puts and got it work in terminal too by compiling with -no-pie to get rid of memory randomization
