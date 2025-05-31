@@ -1,65 +1,44 @@
-# SETUP INSTRUCTIONS
-# docker build -t sudo-test .; docker run -it --rm --tty sudo-test
-# also run perl -e 'print(("A"x100 . "\x00") x 50)' | sudo -S id
-# docker build -t sudo-test .
-# docker run -it --rm sudo-test
+###############################################################################
+# Exploitable sudo 1.8.25 + pwntools on Ubuntu 22.04 LTS
+###############################################################################
+FROM ubuntu:22.04
 
-# blog post
+# 1. Non-interactive APT
+ENV DEBIAN_FRONTEND=noninteractive
 
-# alpine releases https://www.alpinelinux.org/releases/
-FROM alpine:3.8.4
+# 2. Bring in build-time tooling and run-time libs
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+        build-essential cmake git curl wget ca-certificates \
+        libssl-dev libffi-dev libcap-dev libpam0g-dev \
+        python3 python3-dev python3-pip python3-setuptools && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# ADD https://dl-cdn.alpinelinux.org/alpine/v3.8/main/x86_64/sudo-1.8.23-r3.apk /tmp/
-# RUN apk add --no-cache /tmp/sudo-1.8.23-r3.apk
+# 3. Build sudo 1.8.25 from the legacy tarball
+WORKDIR /usr/src
+RUN wget https://www.sudo.ws/dist/sudo-1.8.25.tar.gz && \
+    tar xf sudo-1.8.25.tar.gz && \
+    cd sudo-1.8.25 && \
+    ./configure --prefix=/usr --without-secure-path && \
+    make -j"$(nproc)" && make install
 
-RUN apk update && apk add bash
+# 4. Harden sudoers for the pwfeedback PoC
+RUN visudo -cf /etc/sudoers && \
+    echo 'Defaults pwfeedback' >> /etc/sudoers && \
+    grep -q '^Defaults pwfeedback' /etc/sudoers
 
+# 5. Python tooling (modern pip + pwntools)
+RUN python3 -m pip install --upgrade pip setuptools wheel && \
+    python3 -m pip install --no-cache-dir pwntools zstandard
 
-# install python : https://stackoverflow.com/questions/62554991/how-do-i-install-python-on-alpine-linux
-ENV PYTHONUNBUFFERED=1
-RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
-RUN python3 -m ensurepip
-RUN pip3 install --no-cache --upgrade pip setuptools
+# 6. Low-privilege user that still owns /home/base
+ARG USERNAME=base
+ARG UID=1234
+ARG GID=1234
+RUN groupadd -g $GID custom_group && \
+    useradd -m -u $UID -g custom_group -s /bin/bash $USERNAME && \
+    echo "$USERNAME:pass" | chpasswd
+USER $USERNAME
+WORKDIR /home/$USERNAME
 
-
-
-# # https://www.baeldung.com/linux/alpine-install-sudo
-# RUN apk add sudo
-
-# install sudo
-# sudo releases: https://www.sudo.ws/releases/legacy/ 
-RUN apk update
-RUN apk upgrade
-
-RUN apk add --no-cache build-base curl \
-    && curl -LO https://www.sudo.ws/dist/sudo-1.8.25.tar.gz \
-    && tar xzf sudo-1.8.25.tar.gz \
-    && cd sudo-1.8.25 \
-    && ./configure --prefix=/usr --without-secure-path \
-    && make -j$(nproc) && make install
-
-RUN apk add --no-cache build-base curl gdb
-# validate the sudoers file syntax to ensure it's correct
-RUN visudo -cf /etc/sudoers && echo "Sudoers file validation passed"
-RUN echo 'Defaults pwfeedback' >> /etc/sudoers
-RUN grep -q "^Defaults pwfeedback" /etc/sudoers || (echo "Defaults pwfeedback is not in sudoers file" && exit 1)
-
-# Set environment variables
-ENV user=base
-
-
-# https://www.docker.com/blog/understanding-the-docker-user-instruction/
-# Create a custom user with UID 1234 and GID 1234
-RUN addgroup -g 1234 custom_group && \
-    adduser --gecos "" --disabled-password -D -u 1234 -G custom_group ${user} && \
-    echo "${user}:pass" | chpasswd
-
-# Switch to the custom user
-USER ${user}
- 
-# Set the workdir
-WORKDIR /home/${user}
- 
-# Print the UID and GID and start a shell
-CMD ["/bin/sh", "-c", "echo Inside Container: && echo User: $(whoami) UID: $(id -u) GID: $(id -g) && exec /bin/sh"]
-
+CMD ["/bin/bash", "-c", "echo \"Inside container as $(whoami) (uid:$(id -u))\" && exec /bin/bash"]
