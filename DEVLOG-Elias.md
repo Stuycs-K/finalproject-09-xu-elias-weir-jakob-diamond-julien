@@ -47,3 +47,10 @@ AP Macro Exam
 
 - Found way to exploit CVE bug using dockerfile
 - Added makefile and dockerfile
+
+### 2025-05-30
+
+- Tried best to find multiple version to use for developing CVE bug
+- Switched from alpine linux to ubuntu in order to run pwntools, still didn't work but still managed to gain seg fault. 
+- https://y3a.github.io/2021/03/03/sudo-cve-analysis/ 
+- Additional sudo stack overflow: https://iamalsaher.tech/posts/2020-02-08-cve-2019-18634/ 
