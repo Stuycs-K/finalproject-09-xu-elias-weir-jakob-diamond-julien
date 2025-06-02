@@ -2,7 +2,7 @@
 
 ## What are buffer overflows
 
-### The Basics
+### The Basics (Jakob)
 
 ![Buffer Overflow Introductory](figures/BufferOverflowIntroductory.png)
 ([image source](https://en.wikipedia.org/wiki/Buffer_overflow))
@@ -18,19 +18,6 @@
 - Heap based exploits
 - Stack Based Exploits 
 https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-overflow-in-programming-with-example 
-
-### Famous exploit (Julien)
-
-- Morris worm
-    - Cornell Grad Student 
-- Hella other worms -> very popular exploit before best practices mitigated them
-
-
-### Always use protection people
-
-- ASLR
-- SEHOP
-- Data exploitation protection
 
 ## Demos
 
@@ -48,6 +35,17 @@ https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-over
   - old **frame pointer** (pointer from which other elements in the frame can be accessed)
   - local variables
 <img width="480" alt="Screenshot 2025-06-03 at 12 58 58 AM" src="https://github.com/user-attachments/assets/26003099-52c0-4365-a1f6-ca16e9dd5d81" />
+
+### Protection Methods (Julien)
+
+- **Address space layout randomization (ASLR)** randomizes the memory addresses of certain data points involved in a process each time it is run
+- **Stack canaries** are known values placed around a buffer such that they would be corrupted in the event of a buffer overflow
+
+### Famous exploit (Julien)
+
+- Morris worm
+    - Cornell Grad Student 
+- Hella other worms -> very popular exploit before best practices mitigated them
 
 ### Self built "broken" binaries
 
