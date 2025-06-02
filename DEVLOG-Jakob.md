@@ -38,3 +38,6 @@ Later that day: Copy pasting from the walkthrough gave me user2 access. Tried ta
 
 ### 2025-05-30 - Moving to task 9
 Found a walkthrough for task 9, somewhat helpful for my understanding. Pwntools is a help and can probably be used a lot in this project.
+
+### 2025-06-02 - Copying code, adding to presentation
+Copied some TryHackMe code by Elias's request, added new knowledge into my presentation.

@@ -51,4 +51,10 @@ https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-over
 ![Loony Tunes](figures/LooneyTunes.png)
 ([image source](https://www.imdb.com/title/tt8543208/))
 
-#### Tryhackme Root Shell Exploit + Explanation
+#### Tryhackme Shell Exploit + Explanation
+
+- Hard for a cyber student of our level to understand
+- We are given code that takes an input and puts it into a char array, but can overflow
+- This overflow can be manipulated to output Assembly commands
+- The program has the SUID bit, so it can be run as the user
+- Through use of Assembly, you can switch users to the owner of the file
