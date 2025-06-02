@@ -1,1 +1,47 @@
 # Buffer Overflows
+
+## What are buffer overflows
+
+### The Basics
+
+![Buffer Overflow Introductory](figures/BufferOverflowIntroductory.png)
+([image source](https://en.wikipedia.org/wiki/Buffer_overflow))
+
+- Overwrites of memory through overfilling evaluated memory space
+
+### Why can buffer overflows be bad
+
+- Can lead to exploits where overwrites of variables and function pointers, along with the functions themselves, can cause unintended behavior.
+
+### Methods
+
+- Heap based exploits
+- Stack Based Exploits 
+
+### Famous exploit
+
+- Morris worm
+    - Cornell Grad Student 
+- Hella other worms -> very popular exploit before best practices mitigated them
+
+
+## Demos
+
+- Working demo
+- Basic Variable Overwriting
+- Changing the function pointer
+    - using payloads to change pointers
+- Adding shellcode to binary
+- Whatever Julien was doing
+
+### Self built "broken" binaries
+
+### Pwfeedback
+
+### Loony Tunables
+
+
+![Loony Tunes](figures/LooneyTunes.png)
+([image source](https://www.imdb.com/title/tt8543208/))
+
+#### Tryhackme Root Shell Exploit + Explanation
