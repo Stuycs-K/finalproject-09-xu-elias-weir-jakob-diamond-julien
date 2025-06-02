@@ -19,7 +19,7 @@
 - Stack Based Exploits 
 https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-overflow-in-programming-with-example 
 
-### Famous exploit
+### Famous exploit (Julien)
 
 - Morris worm
     - Cornell Grad Student 
@@ -39,7 +39,15 @@ https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-over
 - Changing the function pointer
     - using payloads to change pointers
 - Adding shellcode to binary
-- Whatever Julien was doing
+
+### Demo 4 (Julien)
+#### Stack Background ####
+- **Stack Frame** is one procedure on the call stack
+  - parameters
+  - **return address** is where execution should return when stack frame is completed (can be exploited!)
+  - old **frame pointer** (pointer from which other elements in the frame can be accessed)
+  - local variables
+<img width="480" alt="Screenshot 2025-06-03 at 12 58 58 AM" src="https://github.com/user-attachments/assets/26003099-52c0-4365-a1f6-ca16e9dd5d81" />
 
 ### Self built "broken" binaries
 
