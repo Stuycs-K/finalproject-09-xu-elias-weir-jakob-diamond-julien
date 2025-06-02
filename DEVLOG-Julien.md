@@ -42,3 +42,7 @@ tried to use xxd to write memory into input file
 ### 2025-05-31 - demo2 has been conquered
 
 Got it to work in gdb by swapping printf for puts and got it work in terminal too by compiling with -no-pie to get rid of memory randomization
+
+### 2025-06-01 - demo2 updated
+
+got rid of unnecessary signal handling and fixed some unneeded warnings during compilation
