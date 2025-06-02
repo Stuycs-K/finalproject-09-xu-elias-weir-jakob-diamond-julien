@@ -54,3 +54,8 @@ AP Macro Exam
 - Switched from alpine linux to ubuntu in order to run pwntools, still didn't work but still managed to gain seg fault. 
 - https://y3a.github.io/2021/03/03/sudo-cve-analysis/ 
 - Additional sudo stack overflow: https://iamalsaher.tech/posts/2020-02-08-cve-2019-18634/ 
+
+### 2025-06-02
+
+- Gave up on actually developing / replicating the bug using a docker container, will review on a tryhackme box instead (was sick this weekend + spent hours trying to replicate environment with no success)
+- https://tryhackme.com/room/looneytunes
