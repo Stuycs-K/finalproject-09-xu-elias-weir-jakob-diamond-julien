@@ -17,6 +17,11 @@ working:
 function_pointing:
 	@gcc function_pointing.c -o functions -zexecstack -fno-stack-protector
 
-deploy:
-	@docker build -t sudo-test .
+deploy_pwfeedback:
+	@docker build -t sudo-test pwfeedback
 	@docker run -it --rm --tty sudo-test
+
+deploy_loony: 
+	@docker build --platform linux/amd64 -t looney docker
+	@docker run  --tty --rm \
+           -it looney /bin/bash
