@@ -47,9 +47,11 @@ https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-over
 
 ### Loony Tunables
 
+<img src="figures/LooneyTunes.png" alt="drawing" width="200"/>
 
-![Loony Tunes](figures/LooneyTunes.png)
 ([image source](https://www.imdb.com/title/tt8543208/))
+
+Loony Tunables is a bug within the 
 
 #### Tryhackme Shell Exploit + Explanation
 
