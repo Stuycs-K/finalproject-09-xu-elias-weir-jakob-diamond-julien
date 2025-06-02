@@ -12,7 +12,7 @@ working_demo: working
 	@./working $(ARGS)
 
 working: 
-	@gcc working_demo.c -o working
+	@gcc working_demo.c -o working -zexecstack -fno-stack-protector
 
 function_pointing:
 	@gcc function_pointing.c -o functions -zexecstack -fno-stack-protector

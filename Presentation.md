@@ -17,6 +17,7 @@
 
 - Heap based exploits
 - Stack Based Exploits 
+https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-overflow-in-programming-with-example 
 
 ### Famous exploit
 
@@ -24,6 +25,12 @@
     - Cornell Grad Student 
 - Hella other worms -> very popular exploit before best practices mitigated them
 
+
+### Always use protection people
+
+- ASLR
+- SEHOP
+- Data exploitation protection
 
 ## Demos
 
