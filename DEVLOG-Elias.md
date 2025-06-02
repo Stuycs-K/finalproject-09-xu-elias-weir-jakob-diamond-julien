@@ -59,3 +59,4 @@ AP Macro Exam
 
 - Gave up on actually developing / replicating the bug using a docker container, will review on a tryhackme box instead (was sick this weekend + spent hours trying to replicate environment with no success)
 - https://tryhackme.com/room/looneytunes
+- general upkeep stuff to prepare for final presentation
