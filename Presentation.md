@@ -58,7 +58,94 @@ https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-over
 
 ([image source](https://www.imdb.com/title/tt8543208/))
 
-Loony Tunables is a bug within the 
+Loony Tunables is a bug within the glibc package that doesn't account for malicious formatting of the `GLIBC_TUNABLES` variable. Glibc deals with Glib
+
+```c
+162 static void
+163 parse_tunables (char *tunestr, char *valstring)
+164 {
+...
+168   char *p = tunestr;
+169   size_t off = 0;
+170 
+171   while (true)
+172     {
+173       char *name = p;
+174       size_t len = 0;
+175 
+176       /* First, find where the name ends.  */
+177       while (p[len] != '=' && p[len] != ':' && p[len] != '\0')
+178         len++;
+179 
+180       /* If we reach the end of the string before getting a valid name-value
+181          pair, bail out.  */
+182       if (p[len] == '\0')
+183         {
+184           if (__libc_enable_secure)
+185             tunestr[off] = '\0';
+186           return;
+187         }
+188 
+189       /* We did not find a valid name-value pair before encountering the
+190          colon.  */
+191       if (p[len]== ':')
+192         {
+193           p += len + 1;
+194           continue;
+195         }
+196 
+197       p += len + 1;
+198 
+199       /* Take the value from the valstring since we need to NULL terminate it.  */
+200       char *value = &valstring[p - tunestr];
+201       len = 0;
+202 
+203       while (p[len] != ':' && p[len] != '\0')
+204         len++;
+205 
+206       /* Add the tunable if it exists.  */
+207       for (size_t i = 0; i < sizeof (tunable_list) / sizeof (tunable_t); i++)
+208         {
+209           tunable_t *cur = &tunable_list[i];
+210 
+211           if (tunable_is_name (cur->name, name))
+212             {
+...
+219               if (__libc_enable_secure)
+220                 {
+221                   if (cur->security_level != TUNABLE_SECLEVEL_SXID_ERASE)
+222                     {
+223                       if (off > 0)
+224                         tunestr[off++] = ':';
+225 
+226                       const char *n = cur->name;
+227 
+228                       while (*n != '\0')
+229                         tunestr[off++] = *n++;
+230 
+231                       tunestr[off++] = '=';
+232 
+233                       for (size_t j = 0; j < len; j++)
+234                         tunestr[off++] = value[j];
+235                     }
+236 
+237                   if (cur->security_level != TUNABLE_SECLEVEL_NONE)
+238                     break;
+239                 }
+240 
+241               value[len] = '\0';
+242               tunable_initialize (cur, value);
+243               break;
+244             }
+245         }
+246 
+247       if (p[len] != '\0')
+248         p += len + 1;
+249     }
+250 }
+```
+
+In the code snippet above, 
 
 #### Tryhackme Shell Exploit + Explanation
 
