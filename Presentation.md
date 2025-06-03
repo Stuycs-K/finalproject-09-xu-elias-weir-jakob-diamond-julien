@@ -41,6 +41,7 @@
 - Basic Variable Overwriting (Elias)
 - Changing the function pointer (Elias)
   - using payloads to change pointers
+- Rewrite the return address
 - Adding shellcode to binary
 
 
