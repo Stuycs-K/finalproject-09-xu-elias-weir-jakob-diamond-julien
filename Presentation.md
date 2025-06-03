@@ -228,6 +228,7 @@ static void parse_tunables (char *tunestr, char *valstring) {
 
 - We are given code that takes an input and puts it into a char array, but can overflow
 - This overflow can be manipulated to output Assembly commands
+- Explains "Sledding"
 - The program has the SUID bit, so it can be run as the user
 - Through use of Assembly, you can switch users to the owner of the file
 - The code exploited is this code, and the goal is to switch to user with ID 1002:
