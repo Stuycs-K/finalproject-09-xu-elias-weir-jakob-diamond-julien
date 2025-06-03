@@ -22,8 +22,6 @@
   - Done with heap memory, something like a `malloc`
   - Heap based stack overflows usually are smaller and are harder to detect
 
-  https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-overflow-in-programming-with-example
-
 ## Demos
 
 - Working demo (Elias)
