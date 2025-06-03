@@ -1,5 +1,5 @@
 // gcc demo2-4.c -o demo2-4 -zexecstck -fno-stack-protector -no-pie -g
-
+// weird ~~skibidi~~gdb x/16xw $rsp
 #include <stdio.h>
 #include <stdlib.h>
 
