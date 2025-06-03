@@ -231,7 +231,7 @@ static void parse_tunables (char *tunestr, char *valstring) {
 - Explains "Sledding"
 - The program has the SUID bit, so it can be run as the user
 - Through use of Assembly, you can switch users to the owner of the file
-- The code exploited is this code, and the goal is to switch to user with ID 1002:
+- The code exploited is this code, and the goal is to switch to the user of the owner of the file:
 
 ```c
 #include <stdio.h>
@@ -254,5 +254,8 @@ int main(int argc, char **argv)
 
 - To exploit the code:
   - Use gdb to find the memory location of the buffer
-    - First,
-  - As the input, put in an arbitrary number of
+    - First, gdb the file
+    - Then, `run ($python -c "print([the input below, replacing the memory address with more junk])")`
+    - Then, run `x/100x $rsp-200` to output the memory, and find the memory address of a place with no operators
+  - As the input, put in an arbitrary number of no operators, then shell code, then junk code, then the memory address found using gdb. The total length should add to 158
+  - Pwntools can be used to find the shellcode for switching users, which is to be put before shellcode for making a shell
