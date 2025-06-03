@@ -50,3 +50,7 @@ got rid of unnecessary signal handling and fixed some unneeded warnings during c
 ### 2025-06-02 - worked on presentation doc
 
 added my demo + protection methods (canaries + alsr)
+
+### 2025-06-03 - morris worm
+
+added morris worm info to presentation doc
