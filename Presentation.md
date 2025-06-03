@@ -11,12 +11,17 @@
 
 ### Why can buffer overflows be bad
 
-- Can lead to exploits where overwrites of variables and function pointers, along with the functions themselves, can cause unintended behavior.
+- Can lead to exploits where overwrites of variables and function pointers, along with the functions themselves, can cause unintended behavior (includes crashing code and stuff).
 
 ### Methods
 
-- Heap based exploits
 - Stack Based Exploits
+  - Basic variables and stuff
+- Heap based exploits
+
+  - Done with heap memory, something like a `malloc`
+  - Heap based stack overflows usually are smaller and are harder to detect
+
   https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-overflow-in-programming-with-example
 
 ## Demos
@@ -37,7 +42,9 @@
   - old **frame pointer** (pointer from which other elements in the frame can be accessed)
   - local variables
 
-<img width="480" alt="Screenshot 2025-06-03 at 12 58 58 AM" src="https://github.com/user-attachments/assets/26003099-52c0-4365-a1f6-ca16e9dd5d81" />
+
+<img src="https://github.com/user-attachments/assets/26003099-52c0-4365-a1f6-ca16e9dd5d81" alt="screenshot" width="100"/>
+
 
 ### Protection Methods (Julien)
 
@@ -51,9 +58,98 @@
   - used known source code of fingerd to overwrite return address in stack frame (same as demo 4)
   - executes code segment that creates a new shell (as root)
 
-### Self built "broken" binaries (Elias)
+### Random built "broken" binaries (Elias)
+
+`working_demo.c`
+
+`working_demo.c` is a proof of concept (POC) of the concept of buffer overflows. It's a simply strcopy that doesn't check for size, which can overflow the buffer.
+
+To run, use these following commands:
+
+```sh
+# run whatever you want, you can overflow the buffer if you enter more than ~5 characters
+make working_demo ARGS=aaaaaaaa
+```
+
+`changing_variable.c`
+
+`changing_variable.c` demonstrates how buffer overflow can change / overwrite a variable name. When one overflows the buffer, the following variable's value will be overwritten, which is detected by the program and printed to output.
+
+To run, use these following commands:
+
+```sh
+# this will hopefully overwrite the buffer, changing the variable
+make variable_change
+> msksmadsmfnadsf
+```
+
+`function_pointing.c`
+
+`function_pointing.c` demonstrates the use of gdb and how one can overwrite functions to perform actions that are not intended by the writers of the program (in this case, of course, it's fully intended, but let's ignore that). By default, the normal function will run, but through overwriting of variables the special or the other function can be run.
+
+There are two functions that can be substituted into the program, one which uses simple piping while the other one uses more complex payloads.
+
+To run, use/execute these following commands:
+
+```sh
+make function_pointing
+gdb functions
+# inside gdb find the function pointers either for the special function or the other function
+# then you could either do a run <<< python -c "print('A' * 13 [enough to overflow] + pointer code)"
+# or first write that into a payload and then insert it into the run function
+```
 
 #### Pwfeedback
+
+The pwfeedback bug is the a bug in the `sudo` package, especially in the code that allows for `*` feedback, which is also called `pwfeedback`. If pwfeedback is enabled, an error is created through a simple forgetting of variables.
+
+```c
+// tgetpass.c
+...
+static char * getln(int fd, char *buf, size_t bufsiz, int feedback) {
+    size_t left = bufsiz;
+    ssize_t nr = -1;
+    char *cp = buf;
+    char c = '\0';
+    debug_decl(getln, SUDO_DEBUG_CONV)
+
+    if (left == 0) {
+	errno = EINVAL;
+	debug_return_str(NULL);		/* sanity */
+    }
+
+    while (--left) {
+	nr = read(fd, &c, 1);
+	if (nr != 1 || c == '\n' || c == '\r')
+	    break;
+	if (feedback) {
+	    if (c == sudo_term_kill) {
+		while (cp > buf) {
+		    if (write(fd, "\b \b", 3) == -1)
+			break;
+		    --cp;
+		}
+		left = bufsiz;
+		continue;
+	    } else if (c == sudo_term_erase) {
+		if (cp > buf) {
+		    if (write(fd, "\b \b", 3) == -1)
+			break;
+		    --cp;
+		    left++;
+		}
+		continue;
+	    }
+	    ignore_result(write(fd, "*", 1));
+	}
+	*cp++ = c;
+    }
+    ...
+```
+
+If tgetpass is enabled (the feedback boolean), and sudo term kill occurs, the code will try to delete the buffer, but it wouldn't work because pipes (if you pip in the password) is unidirectional. That means that the `left` pointer will get updated, but n ot the `cp` pointer, which means that you can overflow the buffer. Since the buffer is defined as `static char buf[SUDO_CONV_REPL_MAX + 1];` and the max size is defined as `#define SUDO_CONV_REPL_MAX	255` Through this, one can overflow the the `TGP_ASKPASS` below, which can set uid and gid to zero and give a shell, providing privilege execution.
+
+**POC**: `perl -e 'print(("A" x 100 . "\x{00}") x 50)' | ./sudo -S id`
 
 #### Looney Tunables
 
@@ -64,91 +160,71 @@
 Looney Tunables is a bug within the glibc package that doesn't account for malicious formatting of the `GLIBC_TUNABLES` variable. Glibc deals with .so, and the part that we're concerned about relates to malformed input for the c code to relate to the malformed pair. For example, usually the format for each tunable is `tunable1=AAA`. When it is instead misformed with an additional `=` sign, the pointer in line 247 doesn't change and it will overflow.
 
 ```c
-162 static void
-163 parse_tunables (char *tunestr, char *valstring)
-164 {
-...
-168   char *p = tunestr;
-169   size_t off = 0;
-170
-171   while (true)
-172     {
-173       char *name = p;
-174       size_t len = 0;
-175
-176       /* First, find where the name ends.  */
-177       while (p[len] != '=' && p[len] != ':' && p[len] != '\0')
-178         len++;
-179
-180       /* If we reach the end of the string before getting a valid name-value
-181          pair, bail out.  */
-182       if (p[len] == '\0')
-183         {
-184           if (__libc_enable_secure)
-185             tunestr[off] = '\0';
-186           return;
-187         }
-188
-189       /* We did not find a valid name-value pair before encountering the
-190          colon.  */
-191       if (p[len]== ':')
-192         {
-193           p += len + 1;
-194           continue;
-195         }
-196
-197       p += len + 1;
-198
-199       /* Take the value from the valstring since we need to NULL terminate it.  */
-200       char *value = &valstring[p - tunestr];
-201       len = 0;
-202
-203       while (p[len] != ':' && p[len] != '\0')
-204         len++;
-205
-206       /* Add the tunable if it exists.  */
-207       for (size_t i = 0; i < sizeof (tunable_list) / sizeof (tunable_t); i++)
-208         {
-209           tunable_t *cur = &tunable_list[i];
-210
-211           if (tunable_is_name (cur->name, name))
-212             {
-...
-219               if (__libc_enable_secure)
-220                 {
-221                   if (cur->security_level != TUNABLE_SECLEVEL_SXID_ERASE)
-222                     {
-223                       if (off > 0)
-224                         tunestr[off++] = ':';
-225
-226                       const char *n = cur->name;
-227
-228                       while (*n != '\0')
-229                         tunestr[off++] = *n++;
-230
-231                       tunestr[off++] = '=';
-232
-233                       for (size_t j = 0; j < len; j++)
-234                         tunestr[off++] = value[j];
-235                     }
-236
-237                   if (cur->security_level != TUNABLE_SECLEVEL_NONE)
-238                     break;
-239                 }
-240
-241               value[len] = '\0';
-242               tunable_initialize (cur, value);
-243               break;
-244             }
-245         }
-246
-247       if (p[len] != '\0')
-248         p += len + 1;
-249     }
-250 }
+static void parse_tunables (char *tunestr, char *valstring) {
+  char *p = tunestr;
+  size_t off = 0;
+  while (true)
+    {
+      char *name = p;
+      size_t len = 0;
+      /* First, find where the name ends.  */
+      while (p[len] != '=' && p[len] != ':' && p[len] != '\0')
+        len++;
+      /* If we reach the end of the string before getting a valid name-value
+         pair, bail out.  */
+      if (p[len] == '\0')
+        {
+          if (__libc_enable_secure)
+            tunestr[off] = '\0';
+          return;
+        }
+      /* We did not find a valid name-value pair before encountering the
+         colon.  */
+      if (p[len]== ':')
+        {
+          p += len + 1;
+          continue;
+        }
+      p += len + 1;
+      /* Take the value from the valstring since we need to NULL terminate it.  */
+      char *value = &valstring[p - tunestr];
+      len = 0;
+      while (p[len] != ':' && p[len] != '\0')
+        len++;
+      /* Add the tunable if it exists.  */
+      for (size_t i = 0; i < sizeof (tunable_list) / sizeof (tunable_t); i++)
+        {
+          tunable_t *cur = &tunable_list[i];
+          if (tunable_is_name (cur->name, name))
+            {
+              if (__libc_enable_secure)
+                {
+                  if (cur->security_level != TUNABLE_SECLEVEL_SXID_ERASE)
+                    {
+                      if (off > 0)
+                        tunestr[off++] = ':';
+                      const char *n = cur->name;
+                      while (*n != '\0')
+                        tunestr[off++] = *n++;
+                      tunestr[off++] = '=';
+                      for (size_t j = 0; j < len; j++)
+                        tunestr[off++] = value[j];
+                    }
+                  if (cur->security_level != TUNABLE_SECLEVEL_NONE)
+                    break;
+                }
+              value[len] = '\0';
+              tunable_initialize (cur, value);
+              break;
+            }
+        }
+      if (p[len] != '\0')
+        p += len + 1;
+    }
+}
 ```
 
-In the code snippet above, if
+**POC**:`env -i "GLIBC_TUNABLES=glibc.malloc.mxfast=glibc.malloc.mxfast=A" "Z=`printf '%08192x' 1`" /usr/bin/su --help`
 
 #### Shell Exploit + Explanation
 
@@ -157,6 +233,7 @@ In the code snippet above, if
 - The program has the SUID bit, so it can be run as the user
 - Through use of Assembly, you can switch users to the owner of the file
 - The code exploited is this code, and the goal is to switch to user with ID 1002:
+
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -175,7 +252,8 @@ int main(int argc, char **argv)
     copy_arg(argv[1]);
 }
 ```
+
 - To exploit the code:
-    - Use gdb to find the memory location of the buffer
-        - First, 
-    - As the input, put in an arbitrary number of 
+  - Use gdb to find the memory location of the buffer
+    - First,
+  - As the input, put in an arbitrary number of

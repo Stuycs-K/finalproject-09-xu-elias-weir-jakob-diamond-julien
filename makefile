@@ -22,6 +22,6 @@ deploy_pwfeedback:
 	@docker run -it --rm --tty sudo-test
 
 deploy_loony: 
-	@docker build --platform linux/amd64 -t looney docker
+	@docker build --platform linux/amd64 -t looney loony
 	@docker run  --tty --rm \
            -it looney /bin/bash
