@@ -41,7 +41,7 @@
   - local variables
 
 
-<img src="https://github.com/user-attachments/assets/26003099-52c0-4365-a1f6-ca16e9dd5d81" alt="screenshot" width="100"/>
+<img src="https://github.com/user-attachments/assets/26003099-52c0-4365-a1f6-ca16e9dd5d81" alt="screenshot" width="600"/>
 
 
 ### Protection Methods (Julien)
