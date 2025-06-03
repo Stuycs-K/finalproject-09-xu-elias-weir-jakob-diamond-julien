@@ -154,3 +154,26 @@ In the code snippet above,
 - This overflow can be manipulated to output Assembly commands
 - The program has the SUID bit, so it can be run as the user
 - Through use of Assembly, you can switch users to the owner of the file
+- The code exploited is this code, and the goal is to switch to user with ID 1002:
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+void copy_arg(char *string)
+{
+    char buffer[140];
+    strcpy(buffer, string);
+    printf("%s\n", buffer);
+    return 0;
+}
+
+int main(int argc, char **argv)
+{
+    printf("Here's a program that echo's out your input\n");
+    copy_arg(argv[1]);
+}
+```
+- To exploit the code:
+    - Use gdb to find the memory location of the buffer
+        - First, 
+    - As the input, put in an arbitrary number of 
