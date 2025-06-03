@@ -22,13 +22,6 @@
   - Done with heap memory, something like a `malloc`
   - Heap based stack overflows usually are smaller and are harder to detect
 
-## Demos
-
-- Working demo (Elias)
-- Basic Variable Overwriting (Elias)
-- Changing the function pointer (Elias)
-  - using payloads to change pointers
-- Adding shellcode to binary
 
 ### Protection Methods (Julien)
 
@@ -41,6 +34,15 @@
   - used buffer overflows (among other exploitation methods)
   - used known source code of fingerd to overwrite return address in stack frame (same as demo 4)
   - executes code segment that creates a new shell (as root)
+
+## Demos
+
+- Working demo (Elias)
+- Basic Variable Overwriting (Elias)
+- Changing the function pointer (Elias)
+  - using payloads to change pointers
+- Adding shellcode to binary
+
 
 ### Random built "broken" binaries (Elias)
 
