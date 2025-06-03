@@ -10,7 +10,7 @@ Elias Xu, Jakob Weir, Julien Diamond
 
 This project aims to give a brief description of the cybersecurity concept of buffer overflows and show some demos, along with real life exploits.
 
-Since C is the programming language that is easiest to show / understand memory overwrites and buffer overflows, we'd be using that for the project. However, we'd be using the stuy computers and dockerfiles to replicate the exact environment that is needed to run the exploit.
+Since C is the programming language that is easiest to show / understand memory overwrites and buffer overflows, we'll be using that for the project. However, we'd be using the stuy computers and dockerfiles to replicate the exact environment that is needed to run the exploit.
 
 ### Instructions:
 
