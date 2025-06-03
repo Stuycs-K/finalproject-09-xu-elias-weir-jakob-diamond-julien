@@ -21,9 +21,9 @@ https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-over
 
 ## Demos
 
-- Working demo
-- Basic Variable Overwriting
-- Changing the function pointer
+- Working demo (Elias)
+- Basic Variable Overwriting (Elias)
+- Changing the function pointer (Elias)
     - using payloads to change pointers
 - Adding shellcode to binary
 
@@ -48,11 +48,11 @@ https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-over
     - used known source code of fingerd to overwrite return address in stack frame (same as demo 4)
     - executes code segment that creates a new shell (as root)
 
-### Self built "broken" binaries
+### Self built "broken" binaries (Elias)
 
-### Pwfeedback
+#### Pwfeedback 
 
-### Loony Tunables
+#### Loony Tunables 
 
 <img src="figures/LooneyTunes.png" alt="drawing" width="200"/>
 
