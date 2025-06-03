@@ -58,7 +58,7 @@ https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-over
 
 ([image source](https://www.imdb.com/title/tt8543208/))
 
-Loony Tunables is a bug within the glibc package that doesn't account for malicious formatting of the `GLIBC_TUNABLES` variable. Glibc deals with Glib
+Loony Tunables is a bug within the glibc package that doesn't account for malicious formatting of the `GLIBC_TUNABLES` variable. Glibc deals with .so, and the part that we're concerned about relates to malformed input for the c code to relate to the malformed pair. For example, usually the format for each tunable is `tunable1=AAA`. When it is instead misformed with an additional `=` sign, the pointer in line 247 doesn't change and it will overflow. 
 
 ```c
 162 static void
@@ -145,7 +145,7 @@ Loony Tunables is a bug within the glibc package that doesn't account for malici
 250 }
 ```
 
-In the code snippet above, 
+In the code snippet above, if 
 
 #### Tryhackme Shell Exploit + Explanation
 
