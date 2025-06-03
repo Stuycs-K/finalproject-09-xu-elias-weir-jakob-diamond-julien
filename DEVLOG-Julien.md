@@ -46,3 +46,11 @@ Got it to work in gdb by swapping printf for puts and got it work in terminal to
 ### 2025-06-01 - demo2 updated
 
 got rid of unnecessary signal handling and fixed some unneeded warnings during compilation
+
+### 2025-06-02 - worked on presentation doc
+
+added my demo + protection methods (canaries + alsr)
+
+### 2025-06-03 - morris worm
+
+added morris worm info to presentation doc
