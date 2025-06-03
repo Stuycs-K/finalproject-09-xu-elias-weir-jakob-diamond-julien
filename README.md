@@ -57,7 +57,18 @@ gdb functions
 
 `demo2-4.c`
 
-@julien
+`demo2-4.c` similarly uses buffer overflow to call a special function, but it overwrites the return address of another function rather than the pointer to originally call the function.
+
+to run:
+```
+gcc demo2-4.c -o demo2-4 -zexecstack -fno-stack-protector -no-pie -g
+gdb demo2-4
+(gdb) disas specialFunctions
+# find the memory address of specialFunctions
+(gdb) quit
+# create input consisting of 16 filler bytes + memory address of specialFunctions
+./demo2-4 < input.txt
+```
 
 `pwfeedback`
 
