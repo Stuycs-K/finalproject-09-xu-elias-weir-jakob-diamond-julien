@@ -30,20 +30,6 @@
   - using payloads to change pointers
 - Adding shellcode to binary
 
-### Demo 4 (Julien)
-
-#### Stack Background
-
-- **Stack Frame** is one procedure on the call stack
-  - parameters
-  - **return address** is where execution should return when stack frame is completed (can be exploited!)
-  - old **frame pointer** (pointer from which other elements in the frame can be accessed)
-  - local variables
-
-
-<img src="https://github.com/user-attachments/assets/26003099-52c0-4365-a1f6-ca16e9dd5d81" alt="screenshot" width="600"/>
-
-
 ### Protection Methods (Julien)
 
 - **Address space layout randomization (ASLR)** randomizes the memory addresses of certain data points involved in a process each time it is run
@@ -223,6 +209,20 @@ static void parse_tunables (char *tunestr, char *valstring) {
 ```
 
 **POC**:`env -i "GLIBC_TUNABLES=glibc.malloc.mxfast=glibc.malloc.mxfast=A" "Z=`printf '%08192x' 1`" /usr/bin/su --help`
+
+#### Demo 4 (Julien)
+
+#### Stack Background
+
+- **Stack Frame** is one procedure on the call stack
+  - parameters
+  - **return address** is where execution should return when stack frame is completed (can be exploited!)
+  - old **frame pointer** (pointer from which other elements in the frame can be accessed)
+  - local variables
+
+
+<img src="https://github.com/user-attachments/assets/26003099-52c0-4365-a1f6-ca16e9dd5d81" alt="screenshot" width="600"/>
+
 
 #### Shell Exploit + Explanation
 
