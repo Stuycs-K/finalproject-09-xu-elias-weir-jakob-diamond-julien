@@ -96,4 +96,4 @@ env -i "GLIBC_TUNABLES=glibc.malloc.mxfast=glibc.malloc.mxfast=A" "Z=`printf '%0
 - https://medium.com/@cyberlarry/walkthrough-tryhackme-buffer-overflows-task-7-overwriting-function-pointers-ac1336979261
 - https://iamalsaher.tech/posts/2020-02-08-cve-2019-18634/ 
 - https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-overflow-in-programming-with-example
-- 
+- https://computerarcheology.com/Virus/MorrisWorm/?utm_source=chatgpt.com
