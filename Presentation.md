@@ -41,11 +41,12 @@ https://stackoverflow.com/questions/4700998/explain-stack-overflow-and-heap-over
 - **Address space layout randomization (ASLR)** randomizes the memory addresses of certain data points involved in a process each time it is run
 - **Stack canaries** are known values placed around a buffer such that they would be corrupted in the event of a buffer overflow
 
-### Famous exploit (Julien)
+### Morris Worm (Julien)
 
-- Morris worm
-    - Cornell Grad Student 
-- Hella other worms -> very popular exploit before best practices mitigated them
+- famous exploit released November 2nd, 1988
+    - used buffer overflows (among other exploitation methods)
+    - used known source code of fingerd to overwrite return address in stack frame (same as demo 4)
+    - executes code segment that creates a new shell (as root)
 
 ### Self built "broken" binaries
 
