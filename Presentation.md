@@ -130,7 +130,7 @@ int main(int argc, char **argv)
   - As the input, put in an arbitrary number of no operators, then shell code, then junk code, then the memory address found using gdb. The total length should add to 158
   - Pwntools can be used to find the shellcode for switching users, which is to be put before shellcode for making a shell
 
-### Pwfeedback ( ! Add cves)
+### Pwfeedback (CVE-2019-18634)
 
 The pwfeedback bug is the a bug in the `sudo` package, especially in the code that allows for `*` feedback, which is also called `pwfeedback`. If pwfeedback is enabled, an error is created through a simple forgetting of variables.
 
@@ -182,7 +182,7 @@ If pwfeedback is enabled (the feedback boolean), and sudo term kill occurs, the 
 
 **POC**: `perl -e 'print(("A" x 100 . "\x{00}") x 50)' | sudo -S id`
 
-#### Looney Tunables
+#### Looney Tunables (CVE-2023-4911)
 
 <img src="figures/LooneyTunes.png" alt="drawing" width="200"/>
 
