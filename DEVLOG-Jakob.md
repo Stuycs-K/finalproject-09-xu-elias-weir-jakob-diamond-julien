@@ -41,3 +41,7 @@ Found a walkthrough for task 9, somewhat helpful for my understanding. Pwntools 
 
 ### 2025-06-02 - Copying code, adding to presentation
 Copied some TryHackMe code by Elias's request, added new knowledge into my presentation.
+
+
+### 2025-06-03 - Final Recording
+Readied my part of the presentation, participated in the recording, and edited the video.
