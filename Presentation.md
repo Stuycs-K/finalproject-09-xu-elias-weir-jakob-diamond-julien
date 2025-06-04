@@ -2,7 +2,7 @@
 
 ## What are buffer overflows
 
-### The Basics (Jakob)
+### The Basics
 
 ![Buffer Overflow Introductory](figures/BufferOverflowIntroductory.png)
 ([image source](https://en.wikipedia.org/wiki/Buffer_overflow))
@@ -22,12 +22,12 @@
   - Done with heap memory, something like a `malloc`
   - Heap based stack overflows usually are smaller and are harder to detect
 
-### Protection Methods (Julien)
+### Protection Methods
 
 - **Address space layout randomization (ASLR)** randomizes the memory addresses of certain data points involved in a process each time it is run
 - **Stack canaries** are known values placed around a buffer such that they would be corrupted in the event of a buffer overflow
 
-### Morris Worm (Julien)
+### Morris Worm
 
 - famous exploit released November 2nd, 1988
   - used buffer overflows (among other exploitation methods)
@@ -36,9 +36,9 @@
 
 ## Demos
 
-- Working demo (Elias)
-- Basic Variable Overwriting (Elias)
-- Changing the function pointer (Elias)
+- Working demo
+- Basic Variable Overwriting
+- Changing the function pointer
   - using payloads to change pointers
 - Rewrite the return address
 - Adding shellcode to binary
@@ -82,7 +82,7 @@ gdb functions
 # or first write that into a payload and then insert it into the run function
 ```
 
-#### Demo 4 (Julien)
+#### Demo 4
 
 #### Stack Background
 
@@ -130,7 +130,7 @@ int main(int argc, char **argv)
   - As the input, put in an arbitrary number of no operators, then shell code, then junk code, then the memory address found using gdb. The total length should add to 158
   - Pwntools can be used to find the shellcode for switching users, which is to be put before shellcode for making a shell
 
-#### Pwfeedback
+### Pwfeedback ( ! Add cves)
 
 The pwfeedback bug is the a bug in the `sudo` package, especially in the code that allows for `*` feedback, which is also called `pwfeedback`. If pwfeedback is enabled, an error is created through a simple forgetting of variables.
 
@@ -178,9 +178,9 @@ static char * getln(int fd, char *buf, size_t bufsiz, int feedback) {
     ...
 ```
 
-If tgetpass is enabled (the feedback boolean), and sudo term kill occurs, the code will try to delete the buffer, but it wouldn't work because pipes (if you pip in the password) is unidirectional. That means that the `left` pointer will get updated, but n ot the `cp` pointer, which means that you can overflow the buffer. Since the buffer is defined as `static char buf[SUDO_CONV_REPL_MAX + 1];` and the max size is defined as `#define SUDO_CONV_REPL_MAX	255` Through this, one can overflow the the `TGP_ASKPASS` below, which can set uid and gid to zero and give a shell, providing privilege execution.
+If pwfeedback is enabled (the feedback boolean), and sudo term kill occurs, the code will try to delete the buffer, but it wouldn't work because pipes (if you pip in the password) is unidirectional. That means that the `left` pointer will get updated, but n ot the `cp` pointer, which means that you can overflow the buffer. Since the buffer is defined as `static char buf[SUDO_CONV_REPL_MAX + 1];` and the max size is defined as `#define SUDO_CONV_REPL_MAX	255` Through this, one can overflow the the `TGP_ASKPASS` below, which can set uid and gid to zero and give a shell, providing privilege execution.
 
-**POC**: `perl -e 'print(("A" x 100 . "\x{00}") x 50)' | ./sudo -S id`
+**POC**: `perl -e 'print(("A" x 100 . "\x{00}") x 50)' | sudo -S id`
 
 #### Looney Tunables
 
