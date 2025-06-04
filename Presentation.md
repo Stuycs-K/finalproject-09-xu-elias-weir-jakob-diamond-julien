@@ -98,10 +98,10 @@ gdb functions
 
 - We are given code that takes an input and puts it into a char array, but can overflow
 - This overflow can be manipulated to output Assembly commands
-- Explains "Sledding"
 - The program has the SUID bit, so it can be run as the user
 - Through use of Assembly, you can switch users to the owner of the file
 - The code exploited is this code, and the goal is to switch to the user of the owner of the file:
+- "Sledding"
 
 ```c
 #include <stdio.h>
