@@ -22,7 +22,6 @@
   - Done with heap memory, something like a `malloc`
   - Heap based stack overflows usually are smaller and are harder to detect
 
-
 ### Protection Methods (Julien)
 
 - **Address space layout randomization (ASLR)** randomizes the memory addresses of certain data points involved in a process each time it is run
@@ -43,9 +42,6 @@
   - using payloads to change pointers
 - Rewrite the return address
 - Adding shellcode to binary
-
-
-### Random built "broken" binaries (Elias)
 
 `working_demo.c`
 
@@ -85,6 +81,54 @@ gdb functions
 # then you could either do a run <<< python -c "print('A' * 13 [enough to overflow] + pointer code)"
 # or first write that into a payload and then insert it into the run function
 ```
+
+#### Demo 4 (Julien)
+
+#### Stack Background
+
+- **Stack Frame** is one procedure on the call stack
+  - parameters
+  - **return address** is where execution should return when stack frame is completed (can be exploited!)
+  - old **frame pointer** (pointer from which other elements in the frame can be accessed)
+  - local variables
+
+<img src="https://github.com/user-attachments/assets/26003099-52c0-4365-a1f6-ca16e9dd5d81" alt="screenshot" width="600"/>
+
+#### Shell Exploit + Explanation
+
+- We are given code that takes an input and puts it into a char array, but can overflow
+- This overflow can be manipulated to output Assembly commands
+- Explains "Sledding"
+- The program has the SUID bit, so it can be run as the user
+- Through use of Assembly, you can switch users to the owner of the file
+- The code exploited is this code, and the goal is to switch to the user of the owner of the file:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+void copy_arg(char *string)
+{
+    char buffer[140];
+    strcpy(buffer, string);
+    printf("%s\n", buffer);
+    return 0;
+}
+
+int main(int argc, char **argv)
+{
+    printf("Here's a program that echo's out your input\n");
+    copy_arg(argv[1]);
+}
+```
+
+- To exploit the code:
+  - Use gdb to find the memory location of the buffer
+    - First, gdb the file
+    - Then, `run ($python -c "print([the input below, replacing the memory address with more junk])")`
+    - Then, run `x/100x $rsp-200` to output the memory, and find the memory address of a place with no operators
+  - As the input, put in an arbitrary number of no operators, then shell code, then junk code, then the memory address found using gdb. The total length should add to 158
+  - Pwntools can be used to find the shellcode for switching users, which is to be put before shellcode for making a shell
 
 #### Pwfeedback
 
@@ -212,53 +256,3 @@ static void parse_tunables (char *tunestr, char *valstring) {
 ```
 
 **POC**:`env -i "GLIBC_TUNABLES=glibc.malloc.mxfast=glibc.malloc.mxfast=A" "Z=`printf '%08192x' 1`" /usr/bin/su --help`
-
-#### Demo 4 (Julien)
-
-#### Stack Background
-
-- **Stack Frame** is one procedure on the call stack
-  - parameters
-  - **return address** is where execution should return when stack frame is completed (can be exploited!)
-  - old **frame pointer** (pointer from which other elements in the frame can be accessed)
-  - local variables
-
-
-<img src="https://github.com/user-attachments/assets/26003099-52c0-4365-a1f6-ca16e9dd5d81" alt="screenshot" width="600"/>
-
-
-#### Shell Exploit + Explanation
-
-- We are given code that takes an input and puts it into a char array, but can overflow
-- This overflow can be manipulated to output Assembly commands
-- Explains "Sledding"
-- The program has the SUID bit, so it can be run as the user
-- Through use of Assembly, you can switch users to the owner of the file
-- The code exploited is this code, and the goal is to switch to the user of the owner of the file:
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-void copy_arg(char *string)
-{
-    char buffer[140];
-    strcpy(buffer, string);
-    printf("%s\n", buffer);
-    return 0;
-}
-
-int main(int argc, char **argv)
-{
-    printf("Here's a program that echo's out your input\n");
-    copy_arg(argv[1]);
-}
-```
-
-- To exploit the code:
-  - Use gdb to find the memory location of the buffer
-    - First, gdb the file
-    - Then, `run ($python -c "print([the input below, replacing the memory address with more junk])")`
-    - Then, run `x/100x $rsp-200` to output the memory, and find the memory address of a place with no operators
-  - As the input, put in an arbitrary number of no operators, then shell code, then junk code, then the memory address found using gdb. The total length should add to 158
-  - Pwntools can be used to find the shellcode for switching users, which is to be put before shellcode for making a shell
